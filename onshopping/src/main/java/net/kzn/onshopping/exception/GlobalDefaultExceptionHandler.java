@@ -10,7 +10,6 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 
 @ControllerAdvice
 public class GlobalDefaultExceptionHandler {
-
 	
 	@ExceptionHandler(NoHandlerFoundException.class)
 	public ModelAndView handlerNoHandlerFoundException() {
@@ -26,42 +25,37 @@ public class GlobalDefaultExceptionHandler {
 		return mv;
 	}
 	
-	
 	@ExceptionHandler(ProductNotFoundException.class)
 	public ModelAndView handlerProductNotFoundException() {
 		
 		ModelAndView mv = new ModelAndView("error");
 		
-		mv.addObject("errorTitle", "Product not available!");
+		mv.addObject("errorTitle", "Product not available");
 		
-		mv.addObject("errorDescription", "The product you are looking for is not available right now!");
+		mv.addObject("errorDescription", "The product you are looking for is not available now!");
 		
-		mv.addObject("title", "Product Unavailable");
+		mv.addObject("title", "Product unavailble");
 		
 		return mv;
 	}
-		
+	
 	
 	@ExceptionHandler(Exception.class)
-	public ModelAndView handlerException(Exception ex) {
+	public ModelAndView handlerException(Exception e) {
 		
 		ModelAndView mv = new ModelAndView("error");
 		
-		mv.addObject("errorTitle", "Contact Your Administrator!!");
+		mv.addObject("errorTitle", "Conatct your Administrator");
 		
+		StringWriter sw=new StringWriter();
+		PrintWriter pw=new PrintWriter(sw);
+		e.printStackTrace(pw);
 		
-		/* only for debugging your application*/
-		StringWriter sw = new StringWriter();
-		PrintWriter pw = new PrintWriter(sw);
-		
-		ex.printStackTrace(pw);
-						
 		mv.addObject("errorDescription", sw.toString());
 		
-		mv.addObject("title", "Error");
+		mv.addObject("title", "Error...");
 		
 		return mv;
 	}
-			
-	
 }
+

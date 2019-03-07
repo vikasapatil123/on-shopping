@@ -1,5 +1,7 @@
 package net.kzn.onshopping.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +15,7 @@ import net.kzn.onshoppinbackend.dto.Category;
 import net.kzn.onshopping.exception.ProductNotFoundException;
 import net.kzn.onshoppinbackend.dto.Product;
 
-	
+
 
 
 @Controller
@@ -22,16 +24,20 @@ public class PageController {
 	@Autowired
 	private CategoryDao categoryDao;  
 	
+	private static final Logger logger=LoggerFactory.getLogger(PageController.class);
+			
 	@Autowired
 	private ProductDao productDao;
 		
 	@RequestMapping(value = { "/", "home", "/index" })
 	public ModelAndView index() {
 		ModelAndView mv = new ModelAndView("page");
-		
+		mv.addObject("title","Home");
+	
+		logger.info("inside page controller index method-INFO");
+		logger.debug("inside page controller index method-DEBUG");
 		//passing list of categories
 		mv.addObject("categories",categoryDao.list());
-		mv.addObject("title","Home");
 		mv.addObject("userClickHome",true);
 		return mv;
 	}
